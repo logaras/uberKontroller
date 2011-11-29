@@ -1,10 +1,11 @@
-package com.uberKontroller;
+package com.uberKontroller.Services;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
+import com.uberKontroller.Activities.RoomsActivity;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -24,12 +25,12 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public class RestService extends IntentService {
-    private static final String TAG = "RestService";
+
     private ArrayList results;
 
     public RestService(String name) {
         super(name);
-        Log.d(TAG, "Service Running");
+        Log.d(RoomsActivity.TAG, "Service Running");
     }
 
     public RestService() {
@@ -42,7 +43,7 @@ public class RestService extends IntentService {
         Bundle b = new Bundle();
 
 
-        Log.d(TAG, "restful: " + restUrl);
+        Log.d(RoomsActivity.TAG, "restful: " + restUrl);
         connect(restUrl);
         receiver.send(1, Bundle.EMPTY);
 
@@ -68,7 +69,7 @@ public class RestService extends IntentService {
                 BufferedReader reader = new BufferedReader(
                                  new InputStreamReader(instream));
 
-                  Log.d(TAG,"Response is" + reader.readLine());
+                  Log.d(RoomsActivity.TAG,"Response is" + reader.readLine());
 
             }
 

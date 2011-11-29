@@ -3,8 +3,11 @@
           package="com.ubercontroller"
           android:versionCode="1"
           android:versionName="1.0">
-    <application android:label="ubercontroller" android:debuggable="true">
-        <activity android:name="com.uberKontroller.Ubercontroller"
+
+    <application android:label="@string/app_name" android:name="com.uberKontroller.UberApp" android:debuggable="true">
+        <!--<application android:label="com.uberKontroller.UberApp" android:debuggable="true">-->
+
+        <activity android:name="com.uberKontroller.Activities.RoomsActivity"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -12,23 +15,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.uberKontroller.ControlActivity"
+        <activity android:name="com.uberKontroller.Activities.NodesActivity"
                   android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+        </activity>
+        <activity android:name="com.uberKontroller.Activities.CapabilitiesActivity"
+                  android:label="@string/app_name">
         </activity>
 
-        <activity android:name="com.uberKontroller.CommunicationActivity"
-                  android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
 
-        <service android:enabled="true" android:name="com.uberKontroller.RestService"/>
+        <service android:enabled="true" android:name="com.uberKontroller.Services.RestService"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest>

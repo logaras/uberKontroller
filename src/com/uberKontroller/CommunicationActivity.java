@@ -10,18 +10,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.uberKontroller.Activities.RoomsActivity;
+import com.uberKontroller.Services.RestService;
 import com.ubercontroller.R;
 
 import java.util.List;
 
 public class CommunicationActivity extends ListActivity implements DataReceiver.Receiver {
     private final static String[] ZONES = {"Zone 1", "Zone 2", "Zone 3"};
-    private static final String TAG = "CommunicationActivity";
     public DataReceiver mReceiver;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "Communication Activity");
+        Log.d(RoomsActivity.TAG, "Communication Activity");
         mReceiver = new DataReceiver(new Handler());
         mReceiver.setReceiver(this);
 
@@ -47,10 +48,10 @@ public class CommunicationActivity extends ListActivity implements DataReceiver.
     }
 
     public void onReceiveResult(int resultCode, Bundle resultData) {
-        Log.d(TAG , "Communication Received Result");
+        Log.d(RoomsActivity.TAG , "Communication Received Result");
         switch (resultCode) {
             case 1:
-                Log.d(TAG , "Result: " + resultData.toString());
+                Log.d(RoomsActivity.TAG , "Result: " + resultData.toString());
                 break;
             case 2:
                 List results;
