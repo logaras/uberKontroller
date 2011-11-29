@@ -15,7 +15,7 @@ public class Capability {
     private boolean isSettable;
     private String latestReadingURL;
 
-    public String getlatestReadingURLL() {
+    public String getlatestReadingURL() {
         return latestReadingURL;
     }
 

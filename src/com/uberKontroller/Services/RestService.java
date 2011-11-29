@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
 import com.uberKontroller.Activities.RoomsActivity;
+import com.uberKontroller.UberApp;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -43,7 +44,7 @@ public class RestService extends IntentService {
         Bundle b = new Bundle();
 
 
-        Log.d(RoomsActivity.TAG, "restful: " + restUrl);
+        Log.d(UberApp.TAG, "restful: " + restUrl);
         connect(restUrl);
         receiver.send(1, Bundle.EMPTY);
 

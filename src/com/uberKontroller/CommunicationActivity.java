@@ -39,8 +39,6 @@ public class CommunicationActivity extends ListActivity implements DataReceiver.
                 toggleLight();
             }
         });
-
-
     }
 
     public void onPause() {

@@ -17,6 +17,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class UberApp extends Application {
+    public final static String TAG = "uberK";
     private HashMap<String, Room> rooms;
 
     public void onCreate() {
