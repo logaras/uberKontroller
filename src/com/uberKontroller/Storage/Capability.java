@@ -1,6 +1,9 @@
 package com.uberKontroller.Storage;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
+import com.uberKontroller.UberApp;
 
 /**
  * Created by IntelliJ IDEA.
@@ -9,11 +12,15 @@ import android.util.Log;
  * Time: 1:17 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Capability {
+public class Capability implements Parcelable {
     private String name;
     private double latestReading;
     private boolean isSettable;
     private String latestReadingURL;
+
+    public Capability(Parcel in) {
+        readFromParcel(in);
+    }
 
     public String getlatestReadingURL() {
         return latestReadingURL;
@@ -27,7 +34,7 @@ public class Capability {
         name = "nodeCap";
         latestReading = 0.0;
         isSettable = false;
-        latestReadingURL= "url";
+        latestReadingURL = "url";
 
     }
 
@@ -42,9 +49,9 @@ public class Capability {
         this.latestReading = latestReading;
         this.isSettable = settable;
 
-        this.latestReadingURL = URLbase  + name + "/latestreading";
+        this.latestReadingURL = URLbase + name + "/latestreading";
 
-        Log.d("TEST",this.latestReadingURL);
+        Log.d("TEST", this.latestReadingURL);
     }
 
     public String getName() {
@@ -70,4 +77,35 @@ public class Capability {
     public void setSettable(boolean settable) {
         isSettable = settable;
     }
+
+    public int describeContents() {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeString(name);
+        parcel.writeDouble(latestReading);
+        parcel.writeInt(isSettable ? 0 : 1);
+        parcel.writeString(latestReadingURL);
+    }
+
+    public void readFromParcel(final Parcel parcel) {
+        name = parcel.readString();
+        latestReading = parcel.readDouble();
+        isSettable = parcel.readInt() == 0;
+        latestReadingURL = parcel.readString();
+    }
+
+    public static final Parcelable.Creator<Capability> CREATOR = new
+            Parcelable.Creator<Capability>() {
+                public Capability createFromParcel(Parcel in) {
+                    Log.v(UberApp.TAG + " Capability", "Creating from parcel");
+                    return new Capability(in);
+                }
+
+                public Capability[] newArray(int size) {
+                    return new Capability[size];
+                }
+            };
+
 }

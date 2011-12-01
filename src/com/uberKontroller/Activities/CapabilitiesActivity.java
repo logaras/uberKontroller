@@ -10,6 +10,7 @@ import android.widget.*;
 import com.uberKontroller.DataReceiver;
 import com.uberKontroller.Services.RestService;
 import com.uberKontroller.Storage.Capability;
+import com.uberKontroller.Storage.Room;
 import com.uberKontroller.UberApp;
 import com.ubercontroller.R;
 
@@ -25,12 +26,9 @@ import java.util.List;
  */
 public class CapabilitiesActivity extends ListActivity implements DataReceiver.Receiver {
     public static final String TAG = "uberK";
-    private String roomKey;
-    private String nodeKey;
     private ArrayList<Capability> capsToDisplay = new ArrayList<Capability>();
     private ArrayList<String> capsNames;
     public DataReceiver mReceiver;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,24 +39,19 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
         final UberApp uberApp = ((UberApp) getApplicationContext());
         Bundle bundle = getIntent().getExtras();
 
-        this.roomKey = bundle.getString("roomKey");
-        this.nodeKey = bundle.getString("nodeKey");
+        Log.i(UberApp.TAG, "breakpoint");
+        final Capability cap = bundle.getParcelable("test");
 
-        // Display Capabilities for room
-        if (roomKey != null && nodeKey == null) {
-            Log.i(RoomsActivity.TAG, "Roomkey is " + roomKey);
-            this.capsToDisplay = uberApp.getCapabilitiesForRoom(roomKey);
-            capsNames = turnCapsToStrings(capsToDisplay);
+        final Room room = bundle.getParcelable("roomKey");
+        Log.i(UberApp.TAG, "Roomkey is " + room.getDescription());
 
-            // Display Capabilities for node
-        } else if (roomKey != null && nodeKey != null) {
-            Log.i(RoomsActivity.TAG, "Roomkey is " + roomKey + ", nodeKey is " + nodeKey);
-            this.capsToDisplay = uberApp.getCapabilitiesForNode(roomKey, nodeKey);
-            capsNames = turnCapsToStrings(capsToDisplay);
+        final ArrayList<Capability> capabilities = room.getCapabilities();
+        Log.i(UberApp.TAG, "has " + capabilities.size());
 
-        }
-        Log.i(UberApp.TAG, "Room " + roomKey + " has " + capsToDisplay.size() + " capabilities");
+        // Convert to String
+        capsNames = turnCapsToStrings(capabilities);
 
+        // Populate listview
         setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, capsNames));
 
         ListView lv = getListView();
@@ -77,9 +70,9 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 //Capability cap = uberApp.getCapabilitiesForRoom(roomKey);
-                Log.d("uberK",((TextView) view).getText().toString());
-
-                //requestCapabilityLatestReading(new Capability());
+                Log.d("uberK", ((TextView) view).getText().toString());
+                final String capKey = ((TextView) view).getText().toString();
+                //requestCapabilityLatestReading(UberApp.getCapability(roomKey,capKey ));
 
             }
         });
@@ -91,7 +84,6 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
         Toast.makeText(getApplicationContext(), "Requesting Value", Toast.LENGTH_SHORT).show();
         final Intent intent = new Intent(Intent.ACTION_SYNC, null, this, RestService.class);
         intent.putExtra("receiver", mReceiver);
-        //intent.putExtra("url", "http://uberdust.cti.gr/rest/testbed/1/node/urn:wisebed:ctitestbed:0x494/capability/urn:wisebed:node:capability:light1/latestreading");
         intent.putExtra("url", capability.getlatestReadingURL());
         startService(intent);
         Toast.makeText(getApplicationContext(), "Finished", Toast.LENGTH_SHORT).show();

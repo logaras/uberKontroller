@@ -40,7 +40,6 @@ public class UberApp extends Application {
         nodesI01.add(new Node("urn:wisebed:ctitestbed:0x1ed4", capabilities_1ed4, "http://uberdust.cti.gr/rest/testbed/1/node/urn:wisebed:ctitestbed:0x1ed/"));
 
 
-
         final ArrayList<Capability> capabilities_ca3 = new ArrayList<Capability>();
         //urn:wisebed:ctitestbed:0xca3
         capabilities_ca3.add(new Capability("urn:wisebed:node:capability:light", 0.0, false, "http://uberdust.cti.gr/rest/testbed/1/node/urn:wisebed:ctitestbed:0xca3/capability/"));
@@ -75,7 +74,7 @@ public class UberApp extends Application {
         capabilities_cad.add(new Capability("urn:wisebed:node:capability:pressure", 0.0, false));
         nodesI01.add(new Node("urn:wisebed:ctitestbed:0xcad", capabilities_cad, "http://restful/url/0x494"));
 
-         rooms.put("0.I.1",new Room("0.I.1",nodesI01));
+        rooms.put("0.I.1", new Room("0.I.1", nodesI01));
 
 
         // Dummy staff
@@ -140,8 +139,8 @@ public class UberApp extends Application {
         return allCaps;
     }
 
-    public ArrayList<Capability> getCapabilitiesForNode(final String roomKey,final String nodeKey) {
-         final ArrayList<Capability> allCaps = new ArrayList<Capability>();
+    public ArrayList<Capability> getCapabilitiesForNode(final String roomKey, final String nodeKey) {
+        final ArrayList<Capability> allCaps = new ArrayList<Capability>();
 
         final ArrayList<Node> roomNodes = (ArrayList<Node>) rooms.get(roomKey).getNodes();
 
@@ -152,5 +151,20 @@ public class UberApp extends Application {
             }
         }
         return allCaps;
+    }
+
+    public Capability getCapability(String roomKey, String capKey) {
+
+
+        return null;
+    }
+
+    public Room getRoom(final String roomKey) {
+
+        if (rooms.containsKey(roomKey)) {
+            return rooms.get(roomKey);
+        }
+        else return null;
+
     }
 }

@@ -32,10 +32,10 @@ public class NodesActivity extends ListActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                            int position, long id) {
 
-                Intent nodesIntent = new Intent(getApplicationContext(), CapabilitiesActivity.class);
-                nodesIntent.putExtra("roomKey", room);
-                nodesIntent.putExtra("nodeKey", ((TextView) view).getText());
-                startActivity(nodesIntent);
+                Intent capabilitiesIntent = new Intent(getApplicationContext(), CapabilitiesActivity.class);
+                capabilitiesIntent.putExtra("roomKey", room);
+                capabilitiesIntent.putExtra("nodeKey", ((TextView) view).getText());
+                startActivity(capabilitiesIntent);
             }
         });
 

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
-import com.uberKontroller.Activities.RoomsActivity;
 import com.uberKontroller.UberApp;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
@@ -31,7 +30,7 @@ public class RestService extends IntentService {
 
     public RestService(String name) {
         super(name);
-        Log.d(RoomsActivity.TAG, "Service Running");
+        Log.d(UberApp.TAG, "Service Running");
     }
 
     public RestService() {
@@ -53,6 +52,9 @@ public class RestService extends IntentService {
     }
 
     private void connect(final String restUrl) {
+
+        Log.d(UberApp.TAG,"URL is " + restUrl);
+        if(true){return;}
         HttpClient httpclient = new DefaultHttpClient();
 
         // Prepare a request object
@@ -70,7 +72,7 @@ public class RestService extends IntentService {
                 BufferedReader reader = new BufferedReader(
                                  new InputStreamReader(instream));
 
-                  Log.d(RoomsActivity.TAG,"Response is" + reader.readLine());
+                  Log.d(UberApp.TAG,"Response is" + reader.readLine());
 
             }
 
