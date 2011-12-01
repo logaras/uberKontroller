@@ -95,6 +95,9 @@ public class UberApp extends Application {
         rooms.put("0.I.3", new Room("0.I.11", dummyNodes));
         rooms.put("0.I.11", new Room("0.I.11", dummyNodes));
 
+
+        insertNodesToCapabilities();
+
     }
 
     public HashMap<String, Room> getRooms() {
@@ -163,8 +166,25 @@ public class UberApp extends Application {
 
         if (rooms.containsKey(roomKey)) {
             return rooms.get(roomKey);
+        } else return null;
+
+    }
+
+
+    public void insertNodesToCapabilities() {
+        for (String s : rooms.keySet()) {
+            final Room room = rooms.get(s);
+            final List<Node> nodes = room.getNodes();
+
+            for (Node node : nodes) {
+                final ArrayList<Capability> caps = (ArrayList<Capability>) node.getCapabilities();
+                for (Capability cap : caps) {
+                    cap.setNodeId(node.getId());
+                }
+            }
+
         }
-        else return null;
+
 
     }
 }

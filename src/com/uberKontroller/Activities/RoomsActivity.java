@@ -10,9 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.uberKontroller.Storage.Capability;
-import com.uberKontroller.Storage.Room;
+import com.uberKontroller.Storage.Node;
 import com.uberKontroller.UberApp;
 import com.ubercontroller.R;
+
+import java.util.ArrayList;
 
 public class RoomsActivity extends ListActivity {
     public static final String TAG = "uberK";
@@ -36,8 +38,7 @@ public class RoomsActivity extends ListActivity {
 
                 Intent nodesIntent = new Intent(getApplicationContext(), NodesActivity.class);
                 final String selectedRoomName = ((TextView) view).getText().toString();
-                final Room room =  uberApp.getRooms().get(selectedRoomName);
-                nodesIntent.putExtra("roomKey", room);
+                nodesIntent.putExtra("roomKey", selectedRoomName);
                 startActivity(nodesIntent);
 
                 return true;
@@ -46,13 +47,11 @@ public class RoomsActivity extends ListActivity {
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
-                                           int position, long id) {
+                                    int position, long id) {
 
                 Intent capabilitesIntent = new Intent(getApplicationContext(), CapabilitiesActivity.class);
                 final String selectedRoomName = ((TextView) view).getText().toString();
-                final Room room =  uberApp.getRooms().get(selectedRoomName);
-                capabilitesIntent.putExtra("roomKey", room);
-                capabilitesIntent.putExtra("test",new Capability());
+                capabilitesIntent.putExtra("roomKey",selectedRoomName);
                 startActivity(capabilitesIntent);
             }
         });

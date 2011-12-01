@@ -15,7 +15,7 @@ import java.util.List;
  * Time: 1:12 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Room implements Parcelable {
+public class Room {
     private String description;
     private List<Node> nodes;
 
@@ -82,17 +82,8 @@ public class Room implements Parcelable {
         return capabilities;
     }
 
-    public static final Parcelable.Creator<Room> CREATOR = new
-            Parcelable.Creator<Room>() {
-                public Room createFromParcel(Parcel in) {
-                    Log.v(UberApp.TAG + " Room", "Creating from parcel");
-                    return new Room(in);
-                }
 
-                public Room[] newArray(int size) {
-                    return new Room[size];
-                }
-            };
+
 
 
 }

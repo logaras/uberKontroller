@@ -39,14 +39,11 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
         final UberApp uberApp = ((UberApp) getApplicationContext());
         Bundle bundle = getIntent().getExtras();
 
-        Log.i(UberApp.TAG, "breakpoint");
-        final Capability cap = bundle.getParcelable("test");
+        final String roomKey = bundle.getString("roomKey");
+        Log.i(UberApp.TAG, "Roomkey is " + roomKey);
 
-        final Room room = bundle.getParcelable("roomKey");
-        Log.i(UberApp.TAG, "Roomkey is " + room.getDescription());
-
-        final ArrayList<Capability> capabilities = room.getCapabilities();
-        Log.i(UberApp.TAG, "has " + capabilities.size());
+        final ArrayList<Capability> capabilities = uberApp.getRoom(roomKey).getCapabilities();
+        Log.i(UberApp.TAG, " has " + capabilities.size());
 
         // Convert to String
         capsNames = turnCapsToStrings(capabilities);
@@ -69,10 +66,11 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+
                 //Capability cap = uberApp.getCapabilitiesForRoom(roomKey);
-                Log.d("uberK", ((TextView) view).getText().toString());
-                final String capKey = ((TextView) view).getText().toString();
-                //requestCapabilityLatestReading(UberApp.getCapability(roomKey,capKey ));
+                Log.d(UberApp.TAG, ((TextView) view).getText().toString()+ " has id " + view.getId());
+                //final String capKey = ((TextView) view).getText().toString();
+                //requestCapabilityLatestReading();
 
             }
         });

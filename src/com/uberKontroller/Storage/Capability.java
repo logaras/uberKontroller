@@ -14,12 +14,29 @@ import com.uberKontroller.UberApp;
  */
 public class Capability implements Parcelable {
     private String name;
+    private String nodeId;
     private double latestReading;
     private boolean isSettable;
     private String latestReadingURL;
 
     public Capability(Parcel in) {
         readFromParcel(in);
+    }
+
+    public String getLatestReadingURL() {
+        return latestReadingURL;
+    }
+
+    public void setLatestReadingURL(String latestReadingURL) {
+        this.latestReadingURL = latestReadingURL;
+    }
+
+    public String getNodeId() {
+        return nodeId;
+    }
+
+    public void setNodeId(String nodeId) {
+        this.nodeId = nodeId;
     }
 
     public String getlatestReadingURL() {
@@ -94,6 +111,11 @@ public class Capability implements Parcelable {
         latestReading = parcel.readDouble();
         isSettable = parcel.readInt() == 0;
         latestReadingURL = parcel.readString();
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     public static final Parcelable.Creator<Capability> CREATOR = new
