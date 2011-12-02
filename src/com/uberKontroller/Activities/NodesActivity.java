@@ -49,4 +49,9 @@ public class NodesActivity extends ListActivity {
     private void toggleLight() {
         Toast.makeText(getApplicationContext(), "Toggling Light", Toast.LENGTH_SHORT).show();
     }
+
+    protected void onPause(){
+       super.onPause();
+   }
+
 }

@@ -42,12 +42,17 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
         Log.i(UberApp.TAG, "Roomkey is " + roomKey);
 
         final HashMap<String, Node> roomNodes = uberApp.getRooms().get(roomKey).getNodes();
-        HashMap<String, Capability> roomCapabilities = new HashMap<String, Capability>();
+
+        final HashMap<String, Capability> roomCapabilities = new HashMap<String, Capability>();
+
         for (Node roomNode : roomNodes.values()) {
             final HashMap<String, Capability> nodeCaps = roomNode.getCapabilities();
-            for (Capability capability : nodeCaps.values()) {
-                roomCapabilities.put(capability.getName(),capability);
 
+            for (Capability nodeCap : nodeCaps.values()) {
+                roomCapabilities.put(nodeCap.getName(),nodeCap);
+                if(nodeCap.getLatestReadingURL() == null){
+                    Log.d(UberApp.TAG,"OMG!");
+                }
             }
         }
 
@@ -75,7 +80,7 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
                                     int position, long id) {
 
                 final String capName = ((TextView) view).getText().toString();
-                Capability cap = uberApp.getCapabilitiesForRoomkey(roomKey).get(capName);
+                Capability cap = roomCapabilities.get(capName);
                 Log.d(UberApp.TAG, capName + " " + cap.getLatestReadingURL());
                 //final String capKey = ((TextView) view).getText().toString();
                 requestCapabilityLatestReading(cap);
@@ -87,14 +92,13 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
     }
 
     private void requestCapabilityLatestReading(Capability capability) {
-        Toast.makeText(getApplicationContext(), "Requesting Value", Toast.LENGTH_SHORT).show();
+
         final Intent intent = new Intent(Intent.ACTION_SYNC, null, this, RestService.class);
         intent.putExtra("receiver", mReceiver);
         intent.putExtra("restUrl", capability.getLatestReadingURL());
 
         startService(intent);
 
-        Toast.makeText(getApplicationContext(), "Finished", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -102,7 +106,10 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
         Log.d(TAG, "Communication Received Result");
         switch (resultCode) {
             case 1:
-                Toast.makeText(getApplicationContext(), "Value: ", Toast.LENGTH_SHORT).show();
+                final String  rawResponse = (String) resultData.get("rawResponse");
+                final String value = rawResponse.substring(rawResponse.indexOf("\t"));
+
+                Toast.makeText(getApplicationContext(), "Value: " + value , Toast.LENGTH_SHORT).show();
                 break;
             case 2:
                 List results;

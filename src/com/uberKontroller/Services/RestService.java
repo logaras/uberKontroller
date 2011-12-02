@@ -39,20 +39,18 @@ public class RestService extends IntentService {
 
     protected void onHandleIntent(Intent intent) {
         final ResultReceiver receiver = intent.getParcelableExtra("receiver");
-        final String restUrl = intent.getExtras().getString("url");
+        final String restUrl = intent.getExtras().getString("restUrl");
 
-        Log.d(UberApp.TAG, "restful: " + restUrl);
-        connect(restUrl);
-        receiver.send(1, Bundle.EMPTY);
-
-
+        Log.d(UberApp.TAG, "resturl: " + restUrl);
+        final Bundle replyBundle = new Bundle();
+        replyBundle.putString("rawResponse", connect(restUrl));
+        receiver.send(1, replyBundle);
         this.stopSelf();
     }
 
-    private void connect(final String restUrl) {
-
-        Log.d(UberApp.TAG,"URL is " + restUrl);
-        if(true){return;}
+    private String connect(final String restUrl) {
+        String stringResponse = "";
+        Log.d(UberApp.TAG, "URL is " + restUrl);
         HttpClient httpclient = new DefaultHttpClient();
 
         // Prepare a request object
@@ -65,12 +63,14 @@ public class RestService extends IntentService {
         try {
             response = httpclient.execute(httpget);
             HttpEntity entity = response.getEntity();
+
             if (entity != null) {
                 InputStream instream = entity.getContent();
                 BufferedReader reader = new BufferedReader(
-                                 new InputStreamReader(instream));
+                        new InputStreamReader(instream));
 
-                  Log.d(UberApp.TAG,"Response is" + reader.readLine());
+                stringResponse = reader.readLine();
+                Log.d(UberApp.TAG, "Response is" + stringResponse);
 
             }
 
@@ -79,9 +79,9 @@ public class RestService extends IntentService {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         // Examine the response status
-                   //Log.i("Praeda",response.getStatusLine().toString());
+        //Log.i("Praeda",response.getStatusLine().toString());
 
-
+        return stringResponse;
     }
 }
 

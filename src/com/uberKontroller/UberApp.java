@@ -116,12 +116,13 @@ public class UberApp extends Application {
         return rooms.get(roomKey).getNodes();
     }
 
-
+/*
     public HashMap<String, Capability> getCapabilitiesForRoomkey(final String roomKey){
         //return this.getRooms().get(roomKey).getCapabilities();
         //TODO check this please
         return null;
     }
+*/
 
     public HashMap<String, Capability> getCapabilitiesForNodekey(final String roomKey, final String nodeKey){
 

@@ -58,6 +58,9 @@ public class RoomsActivity extends ListActivity {
 
 
     }
+     protected void onPause(){
+        super.onPause();
+    }
 
 
 }
