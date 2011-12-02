@@ -39,9 +39,7 @@ public class RestService extends IntentService {
 
     protected void onHandleIntent(Intent intent) {
         final ResultReceiver receiver = intent.getParcelableExtra("receiver");
-        String restUrl = intent.getStringExtra("url");
-        Bundle b = new Bundle();
-
+        final String restUrl = intent.getExtras().getString("url");
 
         Log.d(UberApp.TAG, "restful: " + restUrl);
         connect(restUrl);

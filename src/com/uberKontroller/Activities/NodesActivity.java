@@ -9,6 +9,8 @@ import android.widget.*;
 import com.uberKontroller.UberApp;
 import com.ubercontroller.R;
 
+import java.util.ArrayList;
+
 public class NodesActivity extends ListActivity {
     private static String room = null;
 
@@ -23,14 +25,17 @@ public class NodesActivity extends ListActivity {
 
         final UberApp uberApp = ((UberApp) getApplicationContext());
 
-        setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item,uberApp.getNodesIdsForRoom(room)));
+        final ArrayList<String> displayList = new ArrayList<String>();
+        displayList.addAll(uberApp.getNodesForRoomKey(room).keySet());
+
+        setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, displayList));
 
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
 
-       lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
-                                           int position, long id) {
+                                    int position, long id) {
 
                 Intent capabilitiesIntent = new Intent(getApplicationContext(), CapabilitiesActivity.class);
                 capabilitiesIntent.putExtra("roomKey", room);

@@ -1,12 +1,6 @@
 package com.uberKontroller.Storage;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.Log;
-import com.uberKontroller.UberApp;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,41 +11,16 @@ import java.util.List;
  */
 public class Room {
     private String description;
-    private List<Node> nodes;
+    private HashMap<String, Node> nodes;
 
     public Room() {
         this.description = "desc";
-        this.nodes = new ArrayList<Node>();
+        this.nodes = new HashMap<String, Node>();
     }
 
-    public Room(final String description, final List<Node> nodes) {
+    public Room(final String description, final HashMap<String, Node> nodes) {
         this.description = description;
         this.nodes = nodes;
-    }
-
-    public Room(Parcel in) {
-        nodes = new ArrayList<Node>();
-        readFormParcel(in);
-
-    }
-
-    public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(description);
-        dest.writeInt(nodes.size());
-
-        for (Node node : nodes) {
-            dest.writeParcelable(node, 0);
-        }
-
-    }
-
-    public void readFormParcel(Parcel in) {
-        description = in.readString();
-        final int nodeCount = in.readInt();
-        for (int i = 0; i < nodeCount; i++) {
-            nodes.add((Node) in.readValue(Node.class.getClassLoader()));
-        }
-
     }
 
     public String getDescription() {
@@ -62,28 +31,26 @@ public class Room {
         this.description = description;
     }
 
-    public List<Node> getNodes() {
+    public HashMap<String, Node> getNodes() {
         return nodes;
     }
 
-    public void setNodes(List<Node> nodes) {
+    public void setNodes(HashMap<String, Node> nodes) {
         this.nodes = nodes;
     }
 
-    public int describeContents() {
-        return 0;
-    }
-
-    public ArrayList<Capability> getCapabilities() {
-        final ArrayList<Capability> capabilities = new ArrayList<Capability>();
-        for (Node node : nodes) {
-            capabilities.addAll(node.getCapabilities());
+    public HashMap<String, Capability> getCapabilitiesDEP() {
+        final HashMap<String, Capability> capabilities = new HashMap<String, Capability>();
+        for (Node node : nodes.values()) {
+            final HashMap<String, Capability> nodeCaps = node.getCapabilities();
+            for (String s : nodeCaps.keySet()) {
+                capabilities.put(s, nodeCaps.get(s));
+            }
         }
         return capabilities;
+
+
     }
-
-
-
 
 
 }

@@ -10,11 +10,12 @@ import android.widget.*;
 import com.uberKontroller.DataReceiver;
 import com.uberKontroller.Services.RestService;
 import com.uberKontroller.Storage.Capability;
-import com.uberKontroller.Storage.Room;
+import com.uberKontroller.Storage.Node;
 import com.uberKontroller.UberApp;
 import com.ubercontroller.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,8 +27,6 @@ import java.util.List;
  */
 public class CapabilitiesActivity extends ListActivity implements DataReceiver.Receiver {
     public static final String TAG = "uberK";
-    private ArrayList<Capability> capsToDisplay = new ArrayList<Capability>();
-    private ArrayList<String> capsNames;
     public DataReceiver mReceiver;
 
     @Override
@@ -42,14 +41,22 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
         final String roomKey = bundle.getString("roomKey");
         Log.i(UberApp.TAG, "Roomkey is " + roomKey);
 
-        final ArrayList<Capability> capabilities = uberApp.getRoom(roomKey).getCapabilities();
-        Log.i(UberApp.TAG, " has " + capabilities.size());
+        final HashMap<String, Node> roomNodes = uberApp.getRooms().get(roomKey).getNodes();
+        HashMap<String, Capability> roomCapabilities = new HashMap<String, Capability>();
+        for (Node roomNode : roomNodes.values()) {
+            final HashMap<String, Capability> nodeCaps = roomNode.getCapabilities();
+            for (Capability capability : nodeCaps.values()) {
+                roomCapabilities.put(capability.getName(),capability);
 
-        // Convert to String
-        capsNames = turnCapsToStrings(capabilities);
+            }
+        }
+
+        Log.i(UberApp.TAG, " has " + roomCapabilities.size());
 
         // Populate listview
-        setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, capsNames));
+        final ArrayList<String> displayList = new ArrayList<String>();
+        displayList.addAll(roomCapabilities.keySet());
+        setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, displayList));
 
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
@@ -67,10 +74,11 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                //Capability cap = uberApp.getCapabilitiesForRoom(roomKey);
-                Log.d(UberApp.TAG, ((TextView) view).getText().toString()+ " has id " + view.getId());
+                final String capName = ((TextView) view).getText().toString();
+                Capability cap = uberApp.getCapabilitiesForRoomkey(roomKey).get(capName);
+                Log.d(UberApp.TAG, capName + " " + cap.getLatestReadingURL());
                 //final String capKey = ((TextView) view).getText().toString();
-                //requestCapabilityLatestReading();
+                requestCapabilityLatestReading(cap);
 
             }
         });
@@ -82,8 +90,10 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
         Toast.makeText(getApplicationContext(), "Requesting Value", Toast.LENGTH_SHORT).show();
         final Intent intent = new Intent(Intent.ACTION_SYNC, null, this, RestService.class);
         intent.putExtra("receiver", mReceiver);
-        intent.putExtra("url", capability.getlatestReadingURL());
+        intent.putExtra("restUrl", capability.getLatestReadingURL());
+
         startService(intent);
+
         Toast.makeText(getApplicationContext(), "Finished", Toast.LENGTH_SHORT).show();
 
     }
@@ -106,19 +116,8 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
 
     }
 
-
     public void onPause() {
         mReceiver.setReceiver(null); // clear receiver so no leaks.
     }
-
-    private ArrayList<String> turnCapsToStrings(ArrayList<Capability> roomCaps) {
-        final ArrayList<String> roomCapsNames = new ArrayList<String>();
-        for (Capability roomCap : roomCaps) {
-            roomCapsNames.add(roomCap.getName());
-
-        }
-        return roomCapsNames;
-    }
-
 
 }
