@@ -109,7 +109,7 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
                 final String  rawResponse = (String) resultData.get("rawResponse");
                 final String value = rawResponse.substring(rawResponse.indexOf("\t"));
 
-                Toast.makeText(getApplicationContext(), "Value: " + value , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Value: " + value , Toast.LENGTH_LONG).show();
                 break;
             case 2:
                 List results;
