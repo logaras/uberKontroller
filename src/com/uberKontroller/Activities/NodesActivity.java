@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
+import com.uberKontroller.R;
 import com.uberKontroller.UberApp;
-import com.ubercontroller.R;
 
 import java.util.ArrayList;
 

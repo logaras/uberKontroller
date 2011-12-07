@@ -9,12 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.uberKontroller.Storage.Capability;
-import com.uberKontroller.Storage.Node;
+import com.uberKontroller.R;
 import com.uberKontroller.UberApp;
-import com.ubercontroller.R;
 
-import java.util.ArrayList;
 
 public class RoomsActivity extends ListActivity {
     public static final String TAG = "uberK";
@@ -49,7 +46,8 @@ public class RoomsActivity extends ListActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                Intent capabilitesIntent = new Intent(getApplicationContext(), CapabilitiesActivity.class);
+                //Intent capabilitesIntent = new Intent(getApplicationContext(), CapabilitiesActivity.class);
+                Intent capabilitesIntent = new Intent(getApplicationContext(), CapabilitiesAdapterActivity.class);
                 final String selectedRoomName = ((TextView) view).getText().toString();
                 capabilitesIntent.putExtra("roomKey",selectedRoomName);
                 startActivity(capabilitesIntent);

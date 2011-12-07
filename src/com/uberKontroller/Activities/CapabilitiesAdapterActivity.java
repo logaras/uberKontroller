@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.uberKontroller.DataReceiver;
-import com.uberKontroller.R;
 import com.uberKontroller.Services.RestService;
 import com.uberKontroller.Storage.Capability;
 import com.uberKontroller.Storage.Node;
@@ -25,9 +27,11 @@ import java.util.List;
  * Time: 3:22 PM
  * To change this template use File | Settings | File Templates.
  */
-public class CapabilitiesActivity extends ListActivity implements DataReceiver.Receiver {
+public class CapabilitiesAdapterActivity extends ListActivity implements DataReceiver.Receiver {
     public static final String TAG = "uberK";
     public DataReceiver mReceiver;
+
+    private CapabilitiesAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,9 +53,9 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
             final HashMap<String, Capability> nodeCaps = roomNode.getCapabilities();
 
             for (Capability nodeCap : nodeCaps.values()) {
-                roomCapabilities.put(nodeCap.getName(),nodeCap);
-                if(nodeCap.getLatestReadingURL() == null){
-                    Log.d(UberApp.TAG,"OMG!");
+                roomCapabilities.put(nodeCap.getName(), nodeCap);
+                if (nodeCap.getLatestReadingURL() == null) {
+                    Log.d(UberApp.TAG, "OMG!");
                 }
             }
         }
@@ -59,9 +63,11 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
         Log.i(UberApp.TAG, " has " + roomCapabilities.size());
 
         // Populate listview
-        final ArrayList<String> displayList = new ArrayList<String>();
-        displayList.addAll(roomCapabilities.keySet());
-        setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, displayList));
+        //final ArrayList<String> displayList = new ArrayList<String>();
+        //displayList.addAll(roomCapabilities.keySet());
+        //setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, displayList));
+        //setListAdapter();
+        CapabilitiesAdapter mAdapter = new CapabilitiesAdapter(this, new ArrayList(roomCapabilities.keySet()));
 
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
@@ -106,10 +112,10 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
         Log.d(TAG, "Communication Received Result");
         switch (resultCode) {
             case 1:
-                final String  rawResponse = (String) resultData.get("rawResponse");
+                final String rawResponse = (String) resultData.get("rawResponse");
                 final String value = rawResponse.substring(rawResponse.indexOf("\t"));
 
-                Toast.makeText(getApplicationContext(), "Value: " + value , Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Value: " + value, Toast.LENGTH_LONG).show();
                 break;
             case 2:
                 List results;

@@ -12,7 +12,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.uberKontroller.Activities.RoomsActivity;
 import com.uberKontroller.Services.RestService;
-import com.ubercontroller.R;
 
 import java.util.List;
 
