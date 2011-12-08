@@ -47,7 +47,7 @@ public class RoomsActivity extends ListActivity {
                                     int position, long id) {
 
                 //Intent capabilitesIntent = new Intent(getApplicationContext(), CapabilitiesActivity.class);
-                Intent capabilitesIntent = new Intent(getApplicationContext(), CapabilitiesAdapterActivity.class);
+                Intent capabilitesIntent = new Intent(getApplicationContext(), CapabilitiesActivity.class);
                 final String selectedRoomName = ((TextView) view).getText().toString();
                 capabilitesIntent.putExtra("roomKey",selectedRoomName);
                 startActivity(capabilitesIntent);

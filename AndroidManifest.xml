@@ -5,7 +5,8 @@
           android:versionCode="1"
           android:versionName="1.0">
 
-    <application android:icon="@drawable/icon" android:label="@string/app_name" android:name="com.uberKontroller.UberApp" android:debuggable="true">
+    <application android:icon="@drawable/icon" android:label="@string/app_name"
+                 android:name="com.uberKontroller.UberApp" android:debuggable="true">
         <!--<application android:label="com.uberKontroller.UberApp" android:debuggable="true">-->
 
         <activity android:name="com.uberKontroller.Activities.RoomsActivity"
@@ -20,11 +21,15 @@
                   android:label="@string/app_name">
         </activity>
 
-        <activity android:name="com.uberKontroller.Activities.CapabilitiesActivity"
+        <activity android:name=".DepClasses.CapabilitiesActivity"
                   android:label="@string/app_name">
         </activity>
 
-        <activity android:name="com.uberKontroller.Activities.CapabilitiesAdapterActivity"
+        <activity android:name=".DepClasses.CapabilitiesAdapterActivity"
+                  android:label="@string/app_name">
+        </activity>
+
+        <activity android:name=".Activities.CapabilitiesActivity"
                   android:label="@string/app_name">
         </activity>
 

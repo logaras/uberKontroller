@@ -1,4 +1,4 @@
-package com.uberKontroller;
+package com.uberKontroller.DepClasses;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.uberKontroller.Activities.RoomsActivity;
+import com.uberKontroller.R;
 import com.uberKontroller.Services.RestService;
 
 import java.util.List;

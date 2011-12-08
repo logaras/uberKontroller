@@ -1,9 +1,10 @@
-package com.uberKontroller.Activities;
+package com.uberKontroller.DepClasses;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import com.uberKontroller.Activities.CapabilityView;
 import com.uberKontroller.Storage.Capability;
 
 import java.util.ArrayList;
