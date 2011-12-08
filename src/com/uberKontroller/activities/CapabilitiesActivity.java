@@ -47,13 +47,13 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
 
         final HashMap<String, Node> roomNodes = uberApp.getRooms().get(roomKey).getNodes();
 
-        final HashMap<String, Capability> roomCapabilities = new HashMap<String, Capability>();
+        final LinkedList<Capability> roomCapabilities = new LinkedList<Capability>();
 
         for (Node roomNode : roomNodes.values()) {
             final HashMap<String, Capability> nodeCaps = roomNode.getCapabilities();
 
             for (Capability nodeCap : nodeCaps.values()) {
-                roomCapabilities.put(nodeCap.getName(), nodeCap);
+                roomCapabilities.add(nodeCap);
                 if (nodeCap.getLatestReadingURL() == null) {
                     Log.d(UberApp.TAG, "OMG!");
                 }
@@ -61,9 +61,8 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
         }
 
 
-        Log.d(UberApp.TAG,roomCapabilities.values().size() + " capabilities restored");
-        //setListAdapter(new EfficientAdapter(this, new LinkedList<Capability>(roomCapabilities.values())));
-        setListAdapter(new ClickableAdapter(this, R.layout.cap_row, new LinkedList<Capability>(roomCapabilities.values())));
+        Log.d(UberApp.TAG, roomCapabilities.size() + " capabilities restored");
+        setListAdapter(new ClickableAdapter(this, R.layout.cap_row, roomCapabilities));
 
 
     }
@@ -71,12 +70,29 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
 
     public void requestCapabilityLatestReading(Capability capability) {
 
+
         final Intent intent = new Intent(Intent.ACTION_SYNC, null, this, RestService.class);
         intent.putExtra("receiver", mReceiver);
         intent.putExtra("restUrl", capability.getLatestReadingURL());
 
         startService(intent);
 
+    }
+
+    public void toggleCapabilityStatus(Capability capability) {
+        String restUrl = "";
+        if (capability.getLatestReading() == 0) {
+            // Set on
+            restUrl = capability.getOnUrl();
+        } else if (capability.getLatestReading() > 0) {
+            //Set off
+            restUrl = capability.getOffUrl();
+        }
+        final Intent intent = new Intent(Intent.ACTION_SYNC, null, this, RestService.class);
+        intent.putExtra("receiver", mReceiver);
+        intent.putExtra("restUrl", restUrl);
+
+        startService(intent);
 
     }
 
@@ -84,13 +100,15 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
         Log.d(UberApp.TAG, "Communication Received Result");
         switch (resultCode) {
             case 1:
-                final String  rawResponse = (String) resultData.get("rawResponse");
-                if(rawResponse.contains("\t")){
+                final String rawResponse = (String) resultData.get("rawResponse");
+                if (rawResponse.contains("\t")) {
 
                     final String value = rawResponse.substring(rawResponse.indexOf("\t"));
                     Toast.makeText(getApplicationContext(), "Value: " + value, Toast.LENGTH_LONG).show();
-                }else {
-                   Toast.makeText(getApplicationContext(), "Error.Sorry.", Toast.LENGTH_LONG).show();
+                } else if(rawResponse.contains("OK")) {
+                    Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
+                } else{
+                   Toast.makeText(getApplicationContext(), "Sorry", Toast.LENGTH_LONG).show();
                 }
 
                 break;
@@ -105,9 +123,9 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
     }
 
     public void onPause() {
+        super.onPause();
         mReceiver.setReceiver(null); // clear receiver so no leaks.
     }
-
 
 
 }

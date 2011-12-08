@@ -40,10 +40,10 @@ public class ClickableAdapter extends AbstractClickableAdapter {
         } else if (cap.toString().contains("pressure")) {
             capViewHolder.icon.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.pressure));
         } else if (cap.toString().equals("light")) {
-           capViewHolder.icon.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.lightbulb));
+            capViewHolder.icon.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.lightbulb));
         } else if (cap.toString().contains("light")) {
-           capViewHolder.icon.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.onoff));
-        }else {
+            capViewHolder.icon.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.onoff));
+        } else {
             capViewHolder.icon.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon));
         }
 
@@ -79,8 +79,15 @@ public class ClickableAdapter extends AbstractClickableAdapter {
 
                 final CapabilityViewHolder capabilityViewHolder = (CapabilityViewHolder) viewHolder;
                 final Capability selectedCapability = (Capability) capabilityViewHolder.data;
-                if(!selectedCapability.isSettable()){
-                    Toast.makeText(context, selectedCapability.getName() + " cannot be set", Toast.LENGTH_LONG).show();
+                Log.d(UberApp.TAG, "looooong click for " + selectedCapability.toString());
+
+                if (!selectedCapability.isSettable()) {
+                    Toast.makeText(context, selectedCapability.toString() + " cannot be set", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    ((CapabilitiesActivity) context).toggleCapabilityStatus(selectedCapability);
+
                 }
 
             }
@@ -89,6 +96,7 @@ public class ClickableAdapter extends AbstractClickableAdapter {
 
         return mvh;
     }
+
 
     static class CapabilityViewHolder extends ViewHolder {
         TextView text;

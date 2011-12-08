@@ -43,12 +43,12 @@ public class RestService extends IntentService {
 
         Log.d(UberApp.TAG, "resturl: " + restUrl);
 
-        final String rawResponse = connect(restUrl);
+        final String rawResponse = callRest(restUrl);
 
         if (rawResponse != null) {
             final Bundle replyBundle = new Bundle();
 
-            replyBundle.putString("rawResponse", connect(restUrl));
+            replyBundle.putString("rawResponse", callRest(restUrl));
             receiver.send(1, replyBundle);
         } else {
             receiver.send(2, Bundle.EMPTY);
@@ -56,7 +56,7 @@ public class RestService extends IntentService {
         this.stopSelf();
     }
 
-    private String connect(final String restUrl) {
+    private String callRest(final String restUrl) {
         String stringResponse = "";
         Log.d(UberApp.TAG, "URL is " + restUrl);
         HttpClient httpclient = new DefaultHttpClient();
@@ -92,5 +92,6 @@ public class RestService extends IntentService {
 
         return stringResponse;
     }
+
 }
 
