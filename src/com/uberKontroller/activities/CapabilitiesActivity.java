@@ -106,9 +106,9 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
                     final String value = rawResponse.substring(rawResponse.indexOf("\t"));
                     Toast.makeText(getApplicationContext(), "Value: " + value, Toast.LENGTH_LONG).show();
                 } else if(rawResponse.contains("OK")) {
-                    Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), " OK ", Toast.LENGTH_LONG).show();
                 } else{
-                   Toast.makeText(getApplicationContext(), "Sorry", Toast.LENGTH_LONG).show();
+                   Toast.makeText(getApplicationContext(), "Sorry", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
