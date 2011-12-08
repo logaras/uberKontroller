@@ -1,4 +1,4 @@
-package com.uberKontroller.Services;
+package com.uberKontroller.services;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -42,9 +42,17 @@ public class RestService extends IntentService {
         final String restUrl = intent.getExtras().getString("restUrl");
 
         Log.d(UberApp.TAG, "resturl: " + restUrl);
-        final Bundle replyBundle = new Bundle();
-        replyBundle.putString("rawResponse", connect(restUrl));
-        receiver.send(1, replyBundle);
+
+        final String rawResponse = connect(restUrl);
+
+        if (rawResponse != null) {
+            final Bundle replyBundle = new Bundle();
+
+            replyBundle.putString("rawResponse", connect(restUrl));
+            receiver.send(1, replyBundle);
+        } else {
+            receiver.send(2, Bundle.EMPTY);
+        }
         this.stopSelf();
     }
 
@@ -77,6 +85,7 @@ public class RestService extends IntentService {
 
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            return null;
         }
         // Examine the response status
         //Log.i("Praeda",response.getStatusLine().toString());

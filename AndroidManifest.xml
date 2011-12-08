@@ -9,7 +9,7 @@
                  android:name="com.uberKontroller.UberApp" android:debuggable="true">
         <!--<application android:label="com.uberKontroller.UberApp" android:debuggable="true">-->
 
-        <activity android:name="com.uberKontroller.Activities.RoomsActivity"
+        <activity android:name="com.uberKontroller.activities.RoomsActivity"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -17,23 +17,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.uberKontroller.Activities.NodesActivity"
+        <activity android:name="com.uberKontroller.activities.NodesActivity"
                   android:label="@string/app_name">
         </activity>
 
-        <activity android:name=".DepClasses.CapabilitiesActivity"
+        <activity android:name=".activities.CapabilitiesActivity"
                   android:label="@string/app_name">
         </activity>
 
-        <activity android:name=".DepClasses.CapabilitiesAdapterActivity"
-                  android:label="@string/app_name">
-        </activity>
-
-        <activity android:name=".Activities.CapabilitiesActivity"
-                  android:label="@string/app_name">
-        </activity>
-
-        <service android:enabled="true" android:name="com.uberKontroller.Services.RestService"/>
+        <service android:enabled="true" android:name="com.uberKontroller.services.RestService"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest>

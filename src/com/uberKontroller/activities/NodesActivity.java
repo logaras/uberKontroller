@@ -1,4 +1,4 @@
-package com.uberKontroller.Activities;
+package com.uberKontroller.activities;
 
 import android.app.ListActivity;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.uberKontroller.Storage;
+package com.uberKontroller.storage;
 
 import android.util.Log;
 
@@ -82,8 +82,7 @@ public class Capability{
 
     @Override
     public String toString() {
-        return name;
+        return name.substring(name.lastIndexOf(":")+1);
     }
-
 
 }

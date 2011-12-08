@@ -1,9 +1,9 @@
 package com.uberKontroller;
 
 import android.app.Application;
-import com.uberKontroller.Storage.Capability;
-import com.uberKontroller.Storage.Node;
-import com.uberKontroller.Storage.Room;
+import com.uberKontroller.storage.Capability;
+import com.uberKontroller.storage.Node;
+import com.uberKontroller.storage.Room;
 
 import java.util.ArrayList;
 import java.util.HashMap;
