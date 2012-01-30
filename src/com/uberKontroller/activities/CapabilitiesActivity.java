@@ -55,7 +55,7 @@ public class CapabilitiesActivity extends ListActivity implements DataReceiver.R
             for (Capability nodeCap : nodeCaps.values()) {
                 roomCapabilities.add(nodeCap);
                 if (nodeCap.getLatestReadingURL() == null) {
-                    Log.d(UberApp.TAG, "OMG!");
+                    Log.d(UberApp.TAG, "Prob");
                 }
             }
         }
