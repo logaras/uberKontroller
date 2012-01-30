@@ -1,4 +1,4 @@
-package com.uberKontroller.services;
+package com.uberKontroller.services.rest;
 
 import android.os.Bundle;
 import android.os.Handler;

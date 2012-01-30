@@ -1,4 +1,4 @@
-package com.uberKontroller.services;
+package com.uberKontroller.services.websockets;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -24,16 +24,16 @@ import java.util.ArrayList;
  * Time: 4:09 PM
  * To change this template use File | Settings | File Templates.
  */
-public class RestService extends IntentService {
+public class WsService extends IntentService {
 
     private ArrayList results;
 
-    public RestService(String name) {
+    public WsService(String name) {
         super(name);
         Log.d(UberApp.TAG, "Service Running");
     }
 
-    public RestService() {
+    public WsService() {
         super("defaultService");
     }
 
@@ -93,5 +93,10 @@ public class RestService extends IntentService {
         return stringResponse;
     }
 
+    private void socketOnTheWeb(){
+
+
+
+    }
 }
 
